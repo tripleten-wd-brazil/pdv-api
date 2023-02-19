@@ -16,6 +16,8 @@ mongoose.connect(DB_CONNECTION).then(() => console.log("Mongoose Connected!"));
 app.use(express.json());
 app.use(cors());
 
+app.get("/health", (req, res) => res.send("Ok"));
+
 app.use("/products", productRoutes);
 app.use("/order", orderRoutes);
 
