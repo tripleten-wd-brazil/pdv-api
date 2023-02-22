@@ -31,6 +31,16 @@ app.use(
 //   })
 // );
 
+app.use("*", (req, res, next) => {
+  console.log(
+    new Date().toISOString(),
+    req.method,
+    req.originalUrl
+    // .replace(`/api/${process.env.API_KEY}`, "/api/key")
+  );
+  next();
+});
+
 app.get("/health", (req, res) => res.send("Ok"));
 
 app.use("/api/:key", (req, res, next) => {
@@ -38,6 +48,7 @@ app.use("/api/:key", (req, res, next) => {
   if (key === process.env.API_KEY) {
     next();
   } else {
+    console.log("Invalid API Key");
     res.status(401).send("Invalid API Key");
   }
 });
