@@ -1,0 +1,30 @@
+{
+  "name": "pdv-api",
+  "version": "1.0.0",
+  "description": "This application was created for studying purposes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/practicum-wd-brazil/pdv-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/practicum-wd-brazil/pdv-api/issues"
+  },
+  "homepage": "https://github.com/practicum-wd-brazil/pdv-api#readme",
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.1",
+    "prettier": "^2.8.7"
+  }
+}
