@@ -4,8 +4,8 @@
   "description": "This application was created for studying purposes.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,15 @@
     "eslint-plugin-import": "^2.27.5",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
+    "nodemon": "^2.0.22",
     "prettier": "^2.8.7"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.1.0"
   }
 }
