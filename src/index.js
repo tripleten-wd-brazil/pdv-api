@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 const express = require("express");
 require("express-async-errors");
+const cors = require("cors");
 const productRoutes = require("./modules/products/route");
 const userRoutes = require("./modules/user/route");
 const dbConnection = require("./db");
@@ -13,9 +14,13 @@ const port = 3000;
 
 async function main() {
   dbConnection();
+  app.use(cors());
   app.use(express.json());
   app.use(userRoutes);
   app.use(authenticationMiddleware);
+  app.use("/user/me", (req, res) => {
+    res.json(req.user);
+  });
   app.use("/products", productRoutes);
 
   app.use((err, req, res, next) => {

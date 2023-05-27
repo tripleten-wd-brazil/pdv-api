@@ -19,13 +19,13 @@ router.post("/login", async (req, res) => {
 
   const isPasswordValid = await bcrypt.compare(password, user?.password || "");
   if (!isPasswordValid) {
-    return res.status(401).json({ message: "Password or email invalid" });
+    return res.status(400).json({ message: "Password or email invalid" });
   }
 
   const token = jwt.sign({ email }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
-  return res.json({ token });
+  return res.json({ token, email });
 });
 
 module.exports = router;
