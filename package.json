@@ -1,0 +1,24 @@
+{
+  "name": "pdv-api",
+  "version": "1.0.0",
+  "description": "This application was created for studying purposes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/practicum-wd-brazil/pdv-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/practicum-wd-brazil/pdv-api/issues"
+  },
+  "homepage": "https://github.com/practicum-wd-brazil/pdv-api#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
