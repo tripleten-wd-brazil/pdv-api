@@ -14,8 +14,14 @@ const createProduct = (req, res, next) => {
     .catch(next);
 };
 
-const deleteProduct = (req, res) => {
-  Product.findByIdAndDelete(req.params.id).then(() => res.status(204).send());
+const deleteProduct = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product.user !== req.user._id) {
+    return res.status(403).json('Invalid user');
+  }
+  return Product.findByIdAndDelete(req.params.id).then(() =>
+    res.status(204).send()
+  );
 };
 
 module.exports = {
