@@ -4,7 +4,7 @@
   "description": "This application was created for studying purposes.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
     "dev": "nodemon ./src/index.js",
     "prepare": "husky install",
     "lint": "eslint . --fix"
@@ -34,6 +34,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "husky": "^8.0.0",
+    "jest": "^29.6.2",
     "lint-staged": "^13.2.2",
     "nodemon": "^2.0.22",
     "prettier": "2.8.8"
