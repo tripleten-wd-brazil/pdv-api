@@ -1,12 +1,16 @@
 const express = require("express");
 require("express-async-errors");
 const dotenv = require("dotenv");
+const Joi = require("joi");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
-const { default: helmet } = require("helmet");
 const productRoutes = require("./routes/products");
 const orderRoutes = require("./routes/orders");
+const userRoutes = require("./routes/users");
+const validate = require("./middleware/validate");
+const authenticationMiddleware = require("./middleware/authentication");
+const User = require("./models/User");
 
 dotenv.config();
 const app = express();
@@ -31,32 +35,42 @@ app.use(
 //   })
 // );
 
-app.use("*", (req, res, next) => {
-  console.log(
-    new Date().toISOString(),
-    req.method,
-    req.originalUrl
-    // .replace(`/api/${process.env.API_KEY}`, "/api/key")
-  );
+app.use("*", (req, _, next) => {
+  console.log(new Date().toISOString(), req.method, req.originalUrl);
   next();
 });
 
-app.get("/health", (req, res) => res.send("Ok"));
+app.get("/health", (_, res) => res.send("Ok"));
 
-app.use("/api/:key", (req, res, next) => {
-  const { key } = req.params;
-  if (key === process.env.API_KEY) {
-    next();
-  } else {
-    console.log("Invalid API Key");
-    res.status(401).send("Invalid API Key");
-  }
+const createNewUser = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  job: Joi.string().required(),
+  avatar: Joi.string().uri().optional(),
 });
+app.post(
+  "/api/:key/admin/:cohort/user",
+  validate(createNewUser),
+  async (req, res) => {
+    const { key } = req.params;
+    if (key !== process.env.API_KEY) {
+      return res.status(401).send("Unauthorized");
+    }
 
-app.use("/api/:key/products", productRoutes);
-app.use("/api/:key/order", orderRoutes);
+    const user = await User.create({
+      ...req.body,
+      cohort: req.params.cohort,
+    });
+    return res.json(user);
+  }
+);
 
-app.use((err, req, res, next) => {
+app.use(authenticationMiddleware);
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/order", orderRoutes);
+
+app.use((err, _, res, next) => {
   console.error("Error: ", err);
   res.status(500).send(err);
 });
