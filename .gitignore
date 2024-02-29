@@ -1,3 +1,14 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Diretório de dependências
 node_modules
-.env
-coverage
+
+# Diretório de cache npm opcional
+.npm
+
+# Arquivos do sistema e pastas de configurações IDE
+.DS_Store
+.idea
