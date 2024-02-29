@@ -1,4 +1,4 @@
-# Practicum PDV API
+# Tripleten PDV API
 
 This application was created for studying purposes.
 
