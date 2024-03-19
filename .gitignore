@@ -12,3 +12,4 @@ node_modules
 # Arquivos do sistema e pastas de configurações IDE
 .DS_Store
 .idea
+.env
