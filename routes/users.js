@@ -1,11 +1,10 @@
-const fs = require('fs');
-const path = require('path');
 const express = require('express');
-const { getUsers } = require('../controllers/user');
+const { getUsers, saveUser } = require('../controllers/user');
 
 const router = express.Router();
 
 router.get('/users', getUsers);
+router.post('/users', saveUser);
 
 // router.get('/users/:id'  );
 
