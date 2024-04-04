@@ -1,16 +1,13 @@
-const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).send("Unauthorized");
+  const { authorization } = req.headers;
+  const [, token] = authorization.split("Bearer ");
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = payload;
+    next();
+  } catch (err) {
+    next(err);
   }
-
-  const user = await User.findOne({ token });
-  if (!user) {
-    return res.status(401).send("Unauthorized");
-  }
-
-  req.user = user;
-  return next();
 };
