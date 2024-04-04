@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  const { authorization } = req.headers;
+  const { authorization = '' } = req.headers;
   const [, token] = authorization.split('Bearer ');
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
