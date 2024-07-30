@@ -1,3 +1,4 @@
+require("express-async-errors");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -17,7 +18,18 @@ app.get("/health", (req, res) => {
 });
 
 app.use(express.json());
+app.use((req, res, next) => {
+  req.user = {
+    _id: "66847a295c9039b5f06d12bd",
+  };
+  next();
+});
 app.use(users);
+
+app.use((err, req, res, next) => {
+  console.log("middleware de error", err.name, err.message);
+  res.status(err.statusCode || 500).end();
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

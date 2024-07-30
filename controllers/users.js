@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const NotFoundError = require("../errors/NotFoundError");
 
 const getUsers = (req, res) => {
   User.find()
@@ -6,21 +7,25 @@ const getUsers = (req, res) => {
     .catch((err) => res.status(500).json("Error: " + err));
 };
 
-const getUserById = async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
+const getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
 
-  // guard clause or early return;
-  if (!user) {
-    return res.status(404).json("Not found");
+    // guard clause or early return;
+    if (!user) {
+      return res.status(404).json("Not found");
+    }
+
+    // Happy path
+    res.json(user);
+  } catch (error) {
+    throw new NotFoundError(error.message); 
   }
-
-  // Happy path
-  res.json(user);
 };
 
 const createUser = (req, res) => {
-  User.create(req.body)
+  return User.create(req.body)
     .then((createdUser) => res.json(createdUser))
     .catch((err) => res.status(500).json("Error: " + err));
 };
