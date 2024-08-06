@@ -1,9 +1,12 @@
 require("express-async-errors");
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const app = express();
 const port = 3000;
 const users = require("./routes/users");
+const auth = require("./routes/auth");
+const authMiddleware = require("./middlewares/auth");
 
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/pdv");
@@ -18,13 +21,9 @@ app.get("/health", (req, res) => {
 });
 
 app.use(express.json());
-app.use((req, res, next) => {
-  req.user = {
-    _id: "66847a295c9039b5f06d12bd",
-  };
-  next();
-});
-app.use(users);
+app.use("/api", auth);
+app.use(authMiddleware);
+app.use("/api", users);
 
 app.use((err, req, res, next) => {
   console.log("middleware de error", err.name, err.message);
